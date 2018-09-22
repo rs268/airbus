@@ -59,3 +59,10 @@ def convert(df):
 
     df['Image'] = img
     return df
+
+def get_image_arrays(path):
+    img = Image.open(path)
+    im = np.asarray(img)
+    img.close()
+
+    return im
