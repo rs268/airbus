@@ -19,6 +19,8 @@ The batches are sample from the dataset without replacement. The arguments for t
 |training | A boolean that specifies whether the examples to be drawn are training examples |
 |random_state | An int or numpy.random.RandomState to act as a seed for the random number generator|
 
+This method returns a tuple, whose first argument represents the images, and the second argument represents the masks. They're numpy arrays of dimension (W, H, C, N) where W is the width, H is the height, C is the number of channels, and N is the number of examples. **DON'T FORGET TO TRANSPOSE**
+
 ## Usage
 To use this class instantiate the Dataset appropriately and then call draw in the same manner you would use an iterator
 (i.e. a for loop). Example:
