@@ -3,6 +3,7 @@
 ## Explanation
 
 The Dataset class acts as an interface to the dataset itself. It takes 3 arguments in its constructor:
+
 |Argument | Description |
 |--- | --- |
 |train_path | The path to the directory which houses all of the training images |
@@ -11,6 +12,7 @@ The Dataset class acts as an interface to the dataset itself. It takes 3 argumen
 
 The Dataset class has a single exposed function, which returns a generator of batches of specified size.
 The batches are sample from the dataset without replacement. The arguments for the draw method are:
+
 |Argument | Description |
 |--- | --- |
 |size | The number of examples per batch |
@@ -20,6 +22,7 @@ The batches are sample from the dataset without replacement. The arguments for t
 ## Usage
 To use this class instantiate the Dataset appropriately and then call draw in the same manner you would use an iterator
 (i.e. a for loop). Example:
+
 '''
 train_path = 'C:/train'
 test_path = 'C:/test'
