@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import os, os.path
+from PIL import Image
 
 #ref https://www.kaggle.com/paulorzp/run-length-encode-and-decode
 def decode(mask_string, shape=(768,768)):
@@ -45,19 +46,16 @@ def images(path):
     files = os.listdir(path)
     paths = [os.path.join(path, x) for x in files]
 
-    return {'ImageId':files, 'Image':paths}
+    return {'ImageId': files, 'Image': paths}
 
 '''
 Converts an image path in to a numpy array and
-to take an RLE encoded string and turn it in to a numpy array
+takes an RLE encoded string and turns it in to a numpy array
 '''
 def convert(df):
-    df['EncodedPixels'] = decode(df['EncodedPixels'])
-    path = df['Image']
+    df['EncodedPixels'] = df['EncodedPixels'].apply(decode)
+    df['Image'] = df['Image'].apply(get_image_arrays)
 
-    img = get_image_arrays(path)
-
-    df['Image'] = img
     return df
 
 def get_image_arrays(path):
@@ -66,3 +64,17 @@ def get_image_arrays(path):
     img.close()
 
     return im
+
+'''
+Turns dataframe into two numpy arrays of size (W H C N) where
+W: width, H: height, C: channel count, N: number of samples
+'''
+def reform(df):
+
+    df['Image'] = df['Image'].apply(lambda x: x.reshape((x.shape[0], x.shape[1], x.shape[2], 1)))
+    df['EncodedPixels'] = df['EncodedPixels'].apply(lambda x: x.reshape((x.shape[0], x.shape[1], 1, 1)))
+
+    images = np.concatenate(df['Image'].values, axis=3)
+    masks = np.concatenate(df['EncodedPixels'].values, axis=3)
+
+    return (images, masks)
