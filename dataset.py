@@ -11,7 +11,7 @@ class Dataset:
     def draw(self, size, training, random_state=None):
         return self._sample(size, training, random_state)
     
-    def _sample(self, size, training, flag, random_state):
+    def _sample(self, size, training, random_state):
         s = None
         temp = None
         if training:
